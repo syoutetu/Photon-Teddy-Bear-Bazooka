@@ -29,7 +29,6 @@ public class PhotonBazooka : Photon.MonoBehaviour {
 	{
 		animator = GetComponent<Animator>();
 		
-		targetA = GameObject.Find("Teddy");
 		bullet = GameObject.Find("Bullet");
 	}
 	
@@ -119,6 +118,11 @@ public class PhotonBazooka : Photon.MonoBehaviour {
         // solve lookat and update bazooka transform on first il layer
         if (layerIndex == 0)
         {
+			if(targetA == null)
+			{
+				targetA = GameObject.FindGameObjectWithTag("Target");
+			}
+
             if (targetA != null)
             {
                 Vector3 target = targetA.transform.position;

@@ -33,4 +33,5 @@ MonoBehaviour:
   - SetPosition
   - TaggedPlayer
   - Fire
+  - Hit
   DisableAutoOpenWizard: 0
