@@ -65,23 +65,7 @@ public class PhotonBazooka : Photon.MonoBehaviour {
 			
 			if (Input.GetButton("Fire1") && fire < 0.01 && aim > 0.99)
 			{
-				animator.SetFloat("Fire",1);
-				
-				if (bullet != null && spawm != null)
-				{
-					GameObject newBullet = Instantiate(bullet, spawm.transform.position , Quaternion.Euler(0, 0, 0)) as GameObject;
-					
-					Rigidbody rb = newBullet.GetComponent<Rigidbody>();
-					
-					if (rb != null)
-					{
-						rb.velocity = spawm.transform.TransformDirection(Vector3.forward * 20);
-					}
-				}
-			}
-			else
-			{
-				animator.SetFloat("Fire",0, 0.1f, Time.deltaTime);
+				photonView.RPC("Fire", PhotonTargets.All);
 			}
 		}
 		else
@@ -107,6 +91,24 @@ public class PhotonBazooka : Photon.MonoBehaviour {
 			h = (float)stream.ReceiveNext();
 			v = (float)stream.ReceiveNext();
 			load = (bool)stream.ReceiveNext();
+		}
+	}
+
+	[RPC]
+	void Fire()
+	{
+		animator.SetFloat("Fire",1);
+		
+		if (bullet != null && spawm != null)
+		{
+			GameObject newBullet = Instantiate(bullet, spawm.transform.position , Quaternion.Euler(0, 0, 0)) as GameObject;
+			
+			Rigidbody rb = newBullet.GetComponent<Rigidbody>();
+			
+			if (rb != null)
+			{
+				rb.velocity = spawm.transform.TransformDirection(Vector3.forward * 20);
+			}
 		}
 	}
 
